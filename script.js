@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toy Store LTD | Premier Pop Culture & Collectibles Retailer in Los Angeles</title>
+    <!-- Google Fonts Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           CSS Custom Variables (Dark / Light Theme Tokens)
+           ========================================================================== */
+        :root {
+            /* Theme Mode Independent Variables */
+            --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --nav-height: 80px;
+            --container-max: 1240px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Brand Accent Gradients */
+            --accent-primary: #6366f1;   /* Vibrant Indigo */
+            --accent-secondary: #06b6d4; /* Neon Cyan */
+            --accent-gold: #f59e0b;      /* Electric Gold */
+            --accent-purple: #a855f7;    /* Deep Purple */
+            --grad-accent: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --grad-hero-text: linear-gradient(135deg, var(--text-main) 0%, #a855f7 50%, #06b6d4 100%);
+        }
+
+        /* Default Dark Theme Tokens */
+        [data-theme="dark"] {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #2d3748;
+            --bg-nav: rgba(15, 23, 42, 0.88);
+            --bg-modal: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.35);
+            --accordion-bg: #111827;
+            --input-bg: #0f172a;
+        }
+
+        /* Light Theme Tokens */
+        [data-theme="light"] {
+            --bg-dark: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --bg-nav: rgba(255, 255, 255, 0.9);
+            --bg-modal: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-dim: #64748b;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --border-hover: rgba(99, 102, 241, 0.6);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.2);
+            --accordion-bg: #f1f5f9;
+            --input-bg: #f8fafc;
+        }
+
+        /* ==========================================================================
+           Reset & Base Global Styles
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Focus outline indicator for accessibility */
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: 2px solid var(--accent-secondary);
+            outline-offset: 3px;
+        }
+
+        /* ==========================================================================
+           Typography & Badges
+           ========================================================================== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.825rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--accent-secondary);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            margin-bottom: 1.25rem;
+        }
+
+        .badge-gold {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent-gold);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .section-title {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 3.5rem auto;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+
+        /* ==========================================================================
+           Header & Navigation
+           ========================================================================== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            z-index: 1000;
+            background: var(--bg-nav);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .site-header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .logo a {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: var(--grad-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo a::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-secondary);
+            border-radius: 3px;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-secondary);
+            transition: width var(--transition-fast);
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle-btn {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.8rem;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: none;
+            outline: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--grad-accent);
+            color: #ffffff;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(99, 102, 241, 0.5);
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.2);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-nav {
+            padding: 0.55rem 1.25rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: var(--radius-sm);
+        }
+
+        .btn-nav:hover {
+            background: var(--accent-primary);
+            color: #ffffff;
+        }
+
+        .btn-nav::after {
+            display: none !important;
+        }
+
+        /* Mobile Nav Toggle Button */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-main);
+            position: relative;
+            transition: background var(--transition-fast);
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--text-main);
+            left: 0;
+            transition: transform var(--transition-fast);
+        }
+
+        .hamburger::before { top: -7px; }
+        .hamburger::after { bottom: -7px; }
+
+        .nav-toggle[aria-expanded="true"] .hamburger {
+            background: transparent;
+        }
+
+        .nav-toggle[aria-expanded="true"] .hamburger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .nav-toggle[aria-expanded="true"] .hamburger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* ==========================================================================
+           Hero Section
+           ========================================================================== */
+        .hero-section {
+            padding-top: calc(var(--nav-height) + 5rem);
+            padding-bottom: 6rem;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section h1 {
+            font-size: 3.75rem;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            background: var(--grad-hero-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            max-width: 740px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        /* Ambient Hero Glow */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: var(--accent-purple);
+            filter: blur(180px);
+            opacity: 0.15;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        /* ==========================================================================
+           About Section
+           ========================================================================== */
+        .about-section {
+            padding: 6rem 0;
+            background: rgba(148, 163, 184, 0.03);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+        }
+
+        .about-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            color: var(--accent-secondary);
+        }
+
+        .about-card p {
+            color: var(--text-muted);
+            font-size: 0.975rem;
+            line-height: 1.65;
+        }
+
+        /* ==========================================================================
+           Offerings & Services Section
+           ========================================================================== */
+        .offerings-section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2.25rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.925rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: rgba(99, 102, 241, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* ==========================================================================
+           FAQ Accordion Section
+           ========================================================================== */
+        .faq-section {
+            padding: 6rem 0;
+            background: rgba(148, 163, 184, 0.03);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color var(--transition-fast);
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .faq-button {
+            width: 100%;
+            padding: 1.35rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            gap: 1rem;
+        }
+
+        .faq-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            transition: transform var(--transition-normal);
+            stroke: var(--accent-secondary);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-normal) ease-out, padding var(--transition-normal) ease-out;
+            background: var(--accordion-bg);
+            padding: 0 1.75rem;
+        }
+
+        .faq-item.active .faq-content {
+            padding: 1rem 1.75rem 1.5rem 1.75rem;
+        }
+
+        .faq-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        /* ==========================================================================
+           CTA Modal & Form Notification
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-normal), visibility var(--transition-normal);
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: var(--bg-modal);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform var(--transition-normal);
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--text-main);
+            background: rgba(148, 163, 184, 0.1);
+        }
+
+        .modal-header h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-primary);
+            outline: none;
+        }
+
+        .modal-toast {
+            display: none;
+            padding: 1rem;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid var(--accent-secondary);
+            border-radius: var(--radius-md);
+            color: var(--accent-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .modal-toast.active {
+            display: block;
+        }
+
+        /* ==========================================================================
+           Footer
+           ========================================================================== */
+        .site-footer {
+            background: #090d16;
+            color: #f8fafc;
+            padding-top: 4.5rem;
+            padding-bottom: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .footer-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            background: var(--grad-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-info p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .footer-links h4,
+        .footer-compliance h4 {
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-secondary);
+            padding-left: 4px;
+        }
+
+        .footer-compliance p {
+            color: #64748b;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 1.5rem 1.5rem 0 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: #64748b;
+            font-size: 0.825rem;
+        }
+
+        /* ==========================================================================
+           Responsive Media Queries
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-info {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                height: calc(100vh - var(--nav-height));
+                background: var(--bg-dark);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                transform: translateX(100%);
+                transition: transform var(--transition-normal);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                font-size: 1.25rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2.35rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-info {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .about-card, .service-card, .modal-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Header Navigation -->
+    <header class="site-header" id="siteHeader">
+        <nav class="navbar" aria-label="Main Navigation">
+            <div class="logo">
+                <a href="#hero">Toy Store LTD</a>
+            </div>
+
+            <div class="nav-controls">
+                <!-- Theme Mode Switcher -->
+                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark/light theme" title="Toggle Theme">
+                    <svg id="themeIconSun" viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg id="themeIconMoon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+
+                <!-- Navigation Links -->
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#offerings">Products & Events</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><button class="btn btn-nav open-modal-btn" data-modal-title="Visit & Inquire">Visit Us</button></li>
+                </ul>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="badge badge-gold">Los Angeles Specialty Retail Experience</span>
+                    <h1>Where Pop Culture, Passion & Collectibles Unite</h1>
+                    <p class="hero-description">
+                        Connecting fans, families, and adult collectors with iconic IP, action figures, plush, trading card games, and rare designer statues in Southern California.
+                    </p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary open-modal-btn" data-modal-title="Explore Exclusive Collection">Explore Collection</button>
+                        <a href="#about" class="btn btn-secondary">Learn Our Story</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="section-title">
+                    <span class="badge">Brand Identity & Strategy</span>
+                    <h2>About Toy Store LTD</h2>
+                    <p>Authentic products catering to youth, families, and adult collectors ("kidults") across Greater Los Angeles.</p>
+                </div>
+                
+                <div class="about-grid">
+                    <article class="about-card">
+                        <h3>Mission Statement</h3>
+                        <p>To cultivate an inclusive, high-energy retail destination that connects fans, families, and collectors of all ages with the iconic intellectual properties and high-quality collectibles they love.</p>
+                    </article>
+
+                    <article class="about-card">
+                        <h3>Who We Serve</h3>
+                        <p>
+                            <strong>Youth & Families:</strong> Mainstream character merchandise, plush toys, and trend-driven toys.<br><br>
+                            <strong>Kidult Collectors (15–45+):</strong> Anime, comic universes, rare statues, nostalgic IPs, and limited release TCG drops.
+                        </p>
+                    </article>
+
+                    <article class="about-card">
+                        <h3>Experiential Retail</h3>
+                        <p>Positioned in a high-traffic Los Angeles commercial zone, featuring interactive displays, themed trivia nights, trading card tournaments, and community gatherings.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product & Services Section -->
+        <section id="offerings" class="offerings-section">
+            <div class="container">
+                <div class="section-title">
+                    <span class="badge">Curated Offerings</span>
+                    <h2>Products & Experiential Services</h2>
+                    <p>Directly sourced authentic inventory from authorized manufacturers and licensed partners.</p>
+                </div>
+
+                <div class="services-grid">
+                    <article class="service-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <h3>Action Figures & Statues</h3>
+                            <p>Detailed figures and high-end statues spanning comic, anime, and cinematic franchises.</p>
+                        </div>
+                        <button class="btn btn-secondary open-modal-btn" data-modal-title="Pre-Order Action Figures">View Catalog</button>
+                    </article>
+
+                    <article class="service-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            </div>
+                            <h3>Plush & Stuffed Animals</h3>
+                            <p>Premium licensed plush goods, imported novelty items, and seasonal collector runs.</p>
+                        </div>
+                        <button class="btn btn-secondary open-modal-btn" data-modal-title="Browse Plush Inventory">View Plush</button>
+                    </article>
+
+                    <article class="service-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            </div>
+                            <h3>Trading Cards & Accessories</h3>
+                            <p>Sealed booster boxes, structured decks, binders, sleeves, and tournament essentials.</p>
+                        </div>
+                        <button class="btn btn-secondary open-modal-btn" data-modal-title="TCG Drop Reservation">TCG Releases</button>
+                    </article>
+
+                    <article class="service-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <h3>In-Store Events & TCG</h3>
+                            <p>Weekly trading card tournaments, pop culture trivia nights, and product drop launches.</p>
+                        </div>
+                        <button class="btn btn-primary open-modal-btn" data-modal-title="Register for Event Night">Join Event</button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive FAQ Accordion Section -->
+        <section id="faq" class="faq-section">
+            <div class="container">
+                <div class="section-title">
+                    <span class="badge">Customer Help</span>
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Everything you need to know about our Los Angeles store, events, and authentic product sourcing.</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-button" aria-expanded="false">
+                            <span>How do you guarantee product authenticity and safety?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq-content">
+                            <p>Toy Store LTD sources merchandise directly from authorized distributors and licensed manufacturers. All inventory complies with Consumer Product Safety Improvement Act (CPSIA) guidelines and ASTM F963 standards, strictly eliminating counterfeit goods.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-button" aria-expanded="false">
+                            <span>Where is the physical store located, and do you offer local pickup?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq-content">
+                            <p>Our flagship store is situated in a high-foot-traffic commercial district in Los Angeles, CA. We offer click-and-collect options for online orders as part of our omnichannel experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-button" aria-expanded="false">
+                            <span>How can I join weekly TCG tournaments and community nights?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq-content">
+                            <p>You can reserve a tournament spot in person or online via our modal reservation tool. We host weekly TCG tournaments, trivia, and exclusive pop-culture drop reveals.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-button" aria-expanded="false">
+                            <span>Do you ship limited-edition releases nationwide?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq-content">
+                            <p>Yes! Our omnichannel e-commerce portal supports nationwide shipping for limited collector inventory, plush drops, and pre-orders.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3>Toy Store LTD</h3>
+                    <p>Private Limited Liability Company | Registered in California</p>
+                    <p>Flagship Location: Los Angeles, California</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#offerings">Products</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-compliance">
+                    <h4>Safety & Legal Compliance</h4>
+                    <p>Fully compliant with CPSIA, ASTM F963, CDTFA tax compliance, and local Los Angeles retail protocols.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Toy Store LTD. All rights reserved. All trademarks and characters belong to their respective copyright holders.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive CTA Modal Window -->
+    <div class="modal-overlay" id="ctaModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true">
+            <button class="modal-close" id="modalClose" aria-label="Close modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="modal-header">
+                <h3 id="modalTitle">Connect with Toy Store LTD</h3>
+                <p>Sign up for event passes, rare release notifications, or local store inquiries.</p>
+            </div>
+            <form id="modalForm">
+                <div class="form-group">
+                    <label for="userName">Full Name</label>
+                    <input type="text" id="userName" required placeholder="e.g. Alex Morgan">
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email Address</label>
+                    <input type="email" id="userEmail" required placeholder="alex@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="interestCategory">Primary Interest</label>
+                    <select id="interestCategory">
+                        <option value="collector">Adult Collector Items ("Kidult")</option>
+                        <option value="tcg">TCG & Tournament Events</option>
+                        <option value="plush">Plush & Family Goods</option>
+                        <option value="general">General Store Inquiry</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Request</button>
+            </form>
+            <div class="modal-toast" id="modalToast">
+                Thank you! Your inquiry has been received. We'll be in touch shortly!
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            /* 1. Mobile Hamburger Menu Toggle with Auto-Close */
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            const siteHeader = document.getElementById('siteHeader');
+
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', () => {
+                    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                    navToggle.setAttribute('aria-expanded', !expanded);
+                    navLinks.classList.toggle('active');
+                });
+
+                // Auto close mobile drawer when clicking anchor or modal button
+                navLinks.querySelectorAll('a, button').forEach(element => {
+                    element.addEventListener('click', () => {
+                        navToggle.setAttribute('aria-expanded', 'false');
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+
+            /* 2. Header Box Shadow on Scroll */
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    siteHeader.classList.add('scrolled');
+                } else {
+                    siteHeader.classList.remove('scrolled');
+                }
+            });
+
+            /* 3. Dark / Light Mode Switcher with localStorage */
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIconSun = document.getElementById('themeIconSun');
+            const themeIconMoon = document.getElementById('themeIconMoon');
+            const body = document.body;
+
+            const applyTheme = (theme) => {
+                body.setAttribute('data-theme', theme);
+                if (theme === 'light') {
+                    themeIconSun.style.display = 'block';
+                    themeIconMoon.style.display = 'none';
+                } else {
+                    themeIconSun.style.display = 'none';
+                    themeIconMoon.style.display = 'block';
+                }
+                localStorage.setItem('toystoreltd_theme', theme);
+            };
+
+            const savedTheme = localStorage.getItem('toystoreltd_theme') || 'dark';
+            applyTheme(savedTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+
+            /* 4. Interactive FAQ Accordion Toggle */
+            const faqButtons = document.querySelectorAll('.faq-button');
+            faqButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const faqItem = button.parentElement;
+                    const content = faqItem.querySelector('.faq-content');
+                    const isActive = faqItem.classList.contains('active');
+
+                    // Close other active accordions
+                    document.querySelectorAll('.faq-item.active').forEach(item => {
+                        if (item !== faqItem) {
+                            item.classList.remove('active');
+                            item.querySelector('.faq-button').setAttribute('aria-expanded', 'false');
+                            item.querySelector('.faq-content').style.maxHeight = null;
+                        }
+                    });
+
+                    // Toggle clicked accordion
+                    if (isActive) {
+                        faqItem.classList.remove('active');
+                        button.setAttribute('aria-expanded', 'false');
+                        content.style.maxHeight = null;
+                    } else {
+                        faqItem.classList.add('active');
+                        button.setAttribute('aria-expanded', 'true');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            /* 5. Interactive CTA Modal Window & Confirmation Toast */
+            const ctaModal = document.getElementById('ctaModal');
+            const modalClose = document.getElementById('modalClose');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalForm = document.getElementById('modalForm');
+            const modalToast = document.getElementById('modalToast');
+            const openModalButtons = document.querySelectorAll('.open-modal-btn');
+
+            openModalButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const customTitle = btn.getAttribute('data-modal-title');
+                    if (customTitle && modalTitle) {
+                        modalTitle.textContent = customTitle;
+                    }
+                    ctaModal.classList.add('active');
+                    ctaModal.setAttribute('aria-hidden', 'false');
+                });
+            });
+
+            const closeModal = () => {
+                ctaModal.classList.remove('active');
+                ctaModal.setAttribute('aria-hidden', 'true');
+                modalToast.classList.remove('active');
+                modalForm.reset();
+            };
+
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+
+            ctaModal.addEventListener('click', (e) => {
+                if (e.target === ctaModal) {
+                    closeModal();
+                }
+            });
+
+            modalForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                modalToast.classList.add('active');
+                setTimeout(() => {
+                    closeModal();
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
